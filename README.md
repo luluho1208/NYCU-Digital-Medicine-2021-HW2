@@ -14,7 +14,7 @@ Our pipeline
 
 Dataset
 ---
-The dataset we used is the subset from kaggle dataset: SIIM-FISABIO-RSNA COVID-19 Detection (!TODO 超連結https://www.kaggle.com/c/siim-covid19-detection). The orginial data has 6054 training data and are available for object detection task. In this project, we only use 1200 dicom file as train data (including 400 Negative, 400 Typical and 400 Atypical examples). We use Cross-Validation to test our performance, so we create the kfold.txt in TODO!!!!
+The dataset we used is the subset from [kaggle dataset: SIIM-FISABIO-RSNA COVID-19 Detection](https://www.kaggle.com/c/siim-covid19-detection). The orginial data has 6054 training data and are available for object detection task. In this project, we only use 1200 dicom file as train data (including 400 Negative, 400 Typical and 400 Atypical examples). We use Cross-Validation to test our performance, so we create the kfold.txt in dcm_folds
 
 ![](https://i.imgur.com/dNSaffV.png)
 
@@ -36,7 +36,7 @@ Also, We enlarge our training data by resampling 3 times the original data, and 
 Model and Hyper-parameter
 ---
 
-The model we used in this project is Vision Transformer (ViT) [TODO 超連結] ![](https://i.imgur.com/oJjagNv.png). This model is developed by Google and they release some pretrain weight for easily classification tasks. We use pretrain weight : ViT_B-16, which is powerful and pretrained on ImageNet21k and use transfer learning in this project.
+The model we used in this project is [Vision Transformer (ViT)](https://github.com/google-research/vision_transformer). This model is developed by Google and they release some pretrain weight for easily classification tasks. We use pretrain weight : ViT_B-16, which is powerful and pretrained on ImageNet21k and use transfer learning in this project.
 
 * lr : 0.005
 * epoch : 20
