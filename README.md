@@ -1,6 +1,6 @@
 Overview
 ---
-The Task is to classify the given CXR (Chest X- Ray) images and tell whether the patient is normal, pneumonia, or comfirmed from the covid-19.
+The Task is to classify the given CXR (Chest X- Ray) images and tell whether the patient is normal, pneumonia, or comfirmed from the covid-19. 
 
 ![](https://i.imgur.com/iVcEz32.png)
 
@@ -23,7 +23,7 @@ The dataset we used is the subset from kaggle dataset: SIIM-FISABIO-RSNA COVID-1
 
 Data Pre-processing
 ---
-In this phase, we first translate the dicom file to png file with size 1024 with fixed-ratio. And we use the torch.transforms to do the augmentation. We use RandomAffile, RandomCrop, Resize, RandomHorizontalFlip, and Normalize.
+In this phase, we first translate the dicom file to png file with size 1024 with fixed-ratio. And we use the torch.transforms to do the augmentation. We use RandomAffile, RandomCrop, Resize, RandomHorizontalFlip, and Normalize. 
 
 For better performance, we resize the image to 528*528, which is a little large than used model training. Because the data is CXR, we need to do some data enhencement like Histogram Equalization or CLAHE to increase the contrast value in the image, so we can see some detail which is important for model training.
 
@@ -52,20 +52,20 @@ The model we used in this project is Vision Transformer (ViT) [TODO 超連結] !
 
 Benchmark
 ---
-We have 3 labels in this project, and we use the f1-score to be our evaluation metric. We use the sklearn.f1_score (average: macro) to calculate our performance. We save the highest val f1_score epoch model (.pth) as our final model weight and use it to generate the submission.csv file.
+We have 3 labels in this project, and we use the f1-score to be our evaluation metric. We use the sklearn.f1_score (average: macro) to calculate our performance. We save the highest val f1_score epoch model (.pth) as our final model weight and use it to generate the submission.csv file. 
 
 Prerequisite
 ---
     OS:Linux
-
-    environment:
-
+    
+    environment: 
+        
         Python 3.6.9    
-        torch == 1.10.0
+        torch == 1.10.0 
         CUDA version == 10.0
-
-    It is highly recommanded to have at least 1 GPU to run the experiment.
-
+        
+    It is highly recommanded to have at least 2 GPU to run the experiment.
+    
 In "requirements.txt", we have:
 
     opencv-python==4.5.4.60
@@ -75,52 +75,38 @@ In "requirements.txt", we have:
     torch==1.10.0
     torchvision==0.11.1
     ml_collections==0.1.0
+    googledrivedownloader==0.4
+    requests==2.26.0
+    wget==3.2
 
 Usage
 ---
-git clone this page to the local
+1. Git clone this project to local
 ```git=
-git clone https://github.com/s106062339/DM_case1.git
+git clone https://github.com/luluho1208/NYCU-Digital-Medicine-2021-HW2.git
 ```
 
-use the virtualenv to create the virtual environment:
+2. Use the virtualenv to create the virtual environment:
 ```bash=
+cd NYCU-Digital-Medicine-2021-HW2
 virtualenv -p /usr/bin/python3 myenv
 source myenv/bin/activate
 pip install -r requirements.txt
 ```
 
-Then we can start to prepare the data by running "prepare_data.py" , you need to modify the variable 'Data_dir' to meet your Case Presentation 1 Data file.
-
-In this file, we also need to set the variable 'Search_Len' as any value of 100, 300, 500, 1000, for example, to decide the length of text to be chosen from the original case file.
-
-The new created data will be saved in ./Case Presentation 1 Data/{target}_{p,h}_{Search_Len}
-
-So, if we want to run the experiment in Search_Len = 500, we will create 6 sub-folder under ./Case Presentation 1 Data:
-
-    ./Train_p_500
-    ./Train_h_500
-    ./Test_p_500
-    ./Test_h_500
-    ./Validation_p_500
-    ./Validation_h_500
-
-:bulb:Run the command below to execute     
-```bash=
-python prepare_data.py
+3. Download the pretrained ViT model weight and training/test dataset
+```git=
+python setup.py
 ```
 
-For the file "Bert_obesity_classifier.py":
+4. Start train our model
+```git=
+CUDA_VISIBLE_DEVICES=0,1,2,3 python train.py --kfold=0 --epoch=20 --lr=0.001 --resampling=3 --patience=3 --batch_size=4 --num_classes=3 --image_size=528 --root_dir=/home/cjho/NYCU-Digital-Medicine-2021-HW2 --saved_model_path=/home/cjho/NYCU-Digital-Medicine-2021-HW2/save_model/ViT_1124.pth
+```
 
-You need to set the variable 'Data_dir' to meet yor Case Presentation 1 Data file.
-Please name the variable 'csv_name', which is the output csv file name stored in ./Submission folder, and remember to set the variable 'Search_Len' to run the experiment.
-
-If you encounter the CUDA Out of Memory problem, please try to half the batch size, and we can run "Bert_obesity_classifier.py" to train the model.
-We will save the P and H model in ./model which can easy reproduce our result.
-
-:bulb:Run the command below to execute     
-```bash=
-CUDA_VISIBLE_DEVICES=0 python Bert_obesity_classifier.py
+5. Use the saved model to generate submission.csv file
+```git=
+CUDA_VISIBLE_DEVICES=0 python inference.py --batch_size=2 --num_classes=3 --image_size=528 --root_dir=/home/cjho/NYCU-Digital-Medicine-2021-HW2 --pthfile=/home/cjho/NYCU-Digital-Medicine-2021-HW2/save_model/ViT_1124.pth
 ```
 
 Experiment Result:
