@@ -99,7 +99,7 @@ pip install -r requirements.txt
 python setup.py
 ```
 
-4. Start train our model
+4. Start training your model
 ```git=
 CUDA_VISIBLE_DEVICES=0,1,2,3 python train.py --kfold=0 --epoch=20 --lr=0.001 --resampling=3 --patience=3 --batch_size=4 --num_classes=3 --image_size=528 --root_dir=/home/cjho/NYCU-Digital-Medicine-2021-HW2 --saved_model_path=/home/cjho/NYCU-Digital-Medicine-2021-HW2/save_model/ViT_1124.pth
 ```
