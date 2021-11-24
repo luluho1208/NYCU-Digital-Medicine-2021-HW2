@@ -101,12 +101,12 @@ python setup.py
 
 4. Start training your model
 ```git=
-CUDA_VISIBLE_DEVICES=0,1,2,3 python train.py --kfold=0 --epoch=20 --lr=0.001 --resampling=3 --patience=3 --batch_size=4 --num_classes=3 --image_size=528 --root_dir=/home/cjho/NYCU-Digital-Medicine-2021-HW2 --saved_model_path=/home/cjho/NYCU-Digital-Medicine-2021-HW2/save_model/ViT_1124.pth
+CUDA_VISIBLE_DEVICES=0,1,2,3 python train.py --kfold=0 --epoch=20 --lr=0.001 --resampling=3 --patience=3 --batch_size=4 --num_classes=3 --image_size=528 --root_dir=./ --saved_model_path=./save_model/ViT_1124.pth
 ```
 
 5. Use the saved model to generate submission.csv file
 ```git=
-CUDA_VISIBLE_DEVICES=0 python inference.py --batch_size=2 --num_classes=3 --image_size=528 --root_dir=/home/cjho/NYCU-Digital-Medicine-2021-HW2 --pthfile=/home/cjho/NYCU-Digital-Medicine-2021-HW2/save_model/ViT_1124.pth
+CUDA_VISIBLE_DEVICES=0 python inference.py --batch_size=2 --num_classes=3 --image_size=528 --root_dir=./ --pthfile=./save_model/ViT_1124.pth
 ```
 
 Experiment Result:
