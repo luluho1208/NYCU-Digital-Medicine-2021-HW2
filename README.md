@@ -115,9 +115,7 @@ Kaggle competition -- Public leaderboard
 
 ![](https://i.imgur.com/eRzgAVC.png)
 
-Kaggle competition -- Private leaderboard
-
-![](https://i.imgur.com/eRzgAVC.png)
+![](https://i.imgur.com/qYmNDHs.png)
 
 
 
@@ -136,3 +134,4 @@ Learning Rate processing of our ViT model:
 
 
 We can see that although we get No.4 in public leaderboard, our model are not stable enough. Our validation loss can't converge successfully. I think the model is hard to train because the ViT model is powerful but we has limited data, which may cause overfitting easily. Also, The ViT is pretrained on ImageNet21k which is far from CXR type image data. So, we don't get higher performance and more stable training/validation processing.
+
